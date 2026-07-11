@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/olp
+    username: postgres
+    password: Sarthak7509!
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+cloudinary:
+  cloud-name: dhbvqsbl0
+  api-key: 625969246128546
+  api-secret: uN2KI0RCCUN_0avW9OpDJsLdzXI
+
+logging:
+  file:
+    name: logs/app.log
+  level:
+    root: INFO

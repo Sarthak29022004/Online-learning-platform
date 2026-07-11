@@ -1,0 +1,370 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-category-table
+      author: sarthak
+      changes:
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: category_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: category_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: description
+                  type: VARCHAR(1000)
+
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+  - changeSet:
+      id: 002-create-instructor-table
+      author: sarthak
+      changes:
+        - createTable:
+            tableName: instructor
+            columns:
+              - column:
+                  name: instructor_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+
+              - column:
+                  name: expertise
+                  type: VARCHAR(255)
+
+              - column:
+                  name: bio
+                  type: VARCHAR(1000)
+
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+  - changeSet:
+      id: 003-create-student-table
+      author: sarthak
+      changes:
+        - createTable:
+            tableName: student
+            columns:
+              - column:
+                  name: student_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+
+              - column:
+                  name: phone
+                  type: VARCHAR(20)
+
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+  - changeSet:
+      id: 004-create-school-table
+      author: sarthak
+      changes:
+        - createTable:
+            tableName: school
+            columns:
+              - column:
+                  name: school_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: school_name
+                  type: VARCHAR(255)
+
+              - column:
+                  name: description
+                  type: VARCHAR(1000)
+
+              - column:
+                  name: website
+                  type: VARCHAR(500)
+
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+              - column:
+                  name: instructor_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_school_instructor
+                    references: instructor(instructor_id)
+
+  - changeSet:
+      id: 005-create-course-table
+      author: sarthak
+      changes:
+        - createTable:
+            tableName: course
+            columns:
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+
+              - column:
+                  name: description
+                  type: VARCHAR(2000)
+
+              - column:
+                  name: price
+                  type: DOUBLE
+
+              - column:
+                  name: duration
+                  type: VARCHAR(100)
+
+              - column:
+                  name: total_lectures
+                  type: INT
+
+              - column:
+                  name: assignments
+                  type: VARCHAR(2000)
+
+              - column:
+                  name: quizzes
+                  type: VARCHAR(2000)
+
+              - column:
+                  name: materials
+                  type: VARCHAR(2000)
+
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+              - column:
+                  name: instructor_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_course_instructor
+                    references: instructor(instructor_id)
+
+              - column:
+                  name: school_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_course_school
+                    references: school(school_id)
+
+              - column:
+                  name: category_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_course_category
+                    references: category(category_id)
+
+  - changeSet:
+      id: 006-create-progress-table
+      author: sarthak
+      changes:
+        - createTable:
+            tableName: progress
+            columns:
+              - column:
+                  name: progress_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: completed_lectures
+                  type: INT
+
+              - column:
+                  name: total_lectures
+                  type: INT
+
+              - column:
+                  name: percentage
+                  type: DOUBLE
+
+              - column:
+                  name: grade
+                  type: VARCHAR(50)
+
+              - column:
+                  name: achievement
+                  type: VARCHAR(255)
+
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+              - column:
+                  name: student_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_progress_student
+                    references: student(student_id)
+
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_progress_course
+                    references: course(course_id)
+
+  - changeSet:
+      id: 007-create-review-table
+      author: sarthak
+      changes:
+        - createTable:
+            tableName: review
+            columns:
+              - column:
+                  name: review_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: rating
+                  type: INT
+
+              - column:
+                  name: comment
+                  type: VARCHAR(1000)
+
+              - column:
+                  name: review_date
+                  type: DATE
+
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+              - column:
+                  name: student_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_review_student
+                    references: student(student_id)
+
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_review_course
+                    references: course(course_id)
+
+  - changeSet:
+      id: 008-create-storage-table
+      author: sarthak
+      changes:
+        - createTable:
+            tableName: storage
+            columns:
+              - column:
+                  name: storage_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: file_name
+                  type: VARCHAR(255)
+
+              - column:
+                  name: file_type
+                  type: VARCHAR(100)
+
+              - column:
+                  name: file_url
+                  type: VARCHAR(1000)
+
+              - column:
+                  name: uploaded_date
+                  type: DATE
+
+              - column:
+                  name: deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_storage_course
+                    references: course(course_id)
+  - changeSet:
+      id: 009-create-storage-table
+      author: sarthak
+      changes:
+        - addColumn:
+            tableName: student
+            columns:
+              - column:
+                  name: school_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_school_id
+                    references: school(school_id)
